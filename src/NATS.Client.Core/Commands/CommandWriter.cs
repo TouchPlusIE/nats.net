@@ -23,7 +23,9 @@ internal sealed class CommandWriter : IAsyncDisposable
     // memory segment used to consolidate multiple small memory chunks
     // 8520 should fit into 6 packets on 1500 MTU TLS connection or 1 packet on 9000 MTU TLS connection
     // assuming 40 bytes TCP overhead + 40 bytes TLS overhead per packet
-    private const int SendMemSize = 8520;
+
+    // Alex F: the value has been changed to address sending latency for payloads greater than 8kb
+    private const int SendMemSize = 16000;
 
     // should be more than SendMemSize
     // https://github.com/nats-io/nats.net/pull/383#discussion_r1484344102
